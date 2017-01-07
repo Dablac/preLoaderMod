@@ -9,7 +9,7 @@
 	 * @param {Array} images - string of images to load
 	 * @param {Object=} options - overrides to defaults
 	 */
-	var preLoader = function(images, options){
+	var preLoader = function(urls, options){
 		this.options = {
 			pipeline: false,
 			auto: true,
@@ -21,7 +21,8 @@
 
 		options && typeof options == 'object' && this.setOptions(options);
 
-		this.addQueue(images);
+		this.queue = urls;
+		//Array already processed from elements as url strings for this aswell as other functions
 		this.queue.length && this.options.auto && this.processQueue();
 	};
 
@@ -36,17 +37,6 @@
 			key;
 
 		for (key in options) options.hasOwnProperty(key) && (o[key] = options[key]);
-
-		return this;
-	};
-
-	/**
-	 * stores a local array, dereferenced from original
-	 * @param images
-	 * @returns {preLoader}
-	 */
-	preLoader.prototype.addQueue = function(images){
-		this.queue = images.slice();
 
 		return this;
 	};
